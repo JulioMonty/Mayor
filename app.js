@@ -71,7 +71,7 @@ app.get('/solicitudes', async (req, res) => {
                 s.cantidad,
                 s.status
             FROM solicitudes s
-            JOIN productos p ON s.ID_Producto_Solicitado = p.id
+            JOIN productos p ON s.ID_Producto_Solicitado = p.codigo
         `;
 
         const [rows] = await db.query(query);
