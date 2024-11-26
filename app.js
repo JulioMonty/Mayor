@@ -24,6 +24,37 @@ app.get('/datos', async (req, res) => {
         res.status(500).send('Error al obtener los datos');
     }
 });
+app.put('/solicitudes/:id', async (req, res) => {
+    const { id } = req.params; // Extraer el id del parámetro de la URL
+    const { estado } = req.body; // Extraer el estado del cuerpo de la solicitud
+
+    // Validar que el estado esté presente
+    if (!estado) {
+        return res.status(400).json({ error: 'El campo "estado" es requerido' });
+    }
+
+    try {
+        // Consulta para actualizar el estado de la solicitud
+        const query = `
+            UPDATE solicitudes
+            SET status = ?
+            WHERE id = ?
+        `;
+
+        const [result] = await db.query(query, [estado, id]);
+
+        // Verificar si se actualizó algún registro
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Solicitud no encontrada o no se pudo actualizar' });
+        }
+
+        res.json({ message: 'Estado actualizado correctamente' });
+    } catch (err) {
+        console.error('Error al actualizar el estado de la solicitud:', err.message);
+        res.status(500).json({ error: 'Error al actualizar el estado de la solicitud' });
+    }
+});
+
 
 app.post('/peticion', async (req, res) => {
     const { array } = req.body; // Extrae el arreglo del cuerpo de la solicitud
