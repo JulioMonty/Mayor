@@ -65,7 +65,7 @@ app.get('/solicitudes', async (req, res) => {
         const query = `
             SELECT 
                 s.id AS solicitud_id,
-                s.codigo as codigo,
+                p.codigo as codigo,
                 p.nombre AS producto_nombre,
                 p.Precio_Mayoreo,
                 s.cantidad,
