@@ -24,9 +24,9 @@ app.get('/datos', async (req, res) => {
         res.status(500).send('Error al obtener los datos');
     }
 });
-app.put('/solicitudes/id', async (req, res) => {
+app.put('/solicitudes/:id', async (req, res) => {
     const { id } = req.params; // Extraer el id del parámetro de la URL
-    const { estado } = req.body; // Extraer el estado del cuerpo de la solicitud
+    const { status } = req.body; // Extraer el estado del cuerpo de la solicitud
 
     // Validar que el estado esté presente
     if (!estado) {
